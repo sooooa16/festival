@@ -3,14 +3,17 @@ frontend:
   phases:
     preBuild:
       commands:
-        - npm ci
+        - corepack enable # Node 이미지에 corepack 있으면 yarn 자동관리
+        - yarn --version # 디버그용(선택)
+        - yarn install --immutable
     build:
       commands:
-        - npm run build
+        - yarn build
   artifacts:
-    baseDirectory: dist
+    baseDirectory: dist # 프레임워크에 맞게 수정
     files:
-      - '**/*'
+      - "**/*"
   cache:
     paths:
-      - node_modules/**/*
+      - .yarn/cache/**/*
+      - node_modules/**/* # nodeLinker: node-modules일 때만 의미 있음
